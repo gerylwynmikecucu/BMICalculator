@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BMI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" />
+<link rel="stylesheet" href="css/style.css" />
+<script src="js/jquery-1.8.2.min.js"></script>
+<script src="js/jquery.mobile-1.2.0.min.js"></script>
+
+<script type="text/javascript" language="javascript">
+function compute()
+{
+	var w = parseInt(document.getElementById('weight').value);
+	var hf = parseInt(document.getElementById('height_ft').value);
+	var hi = parseInt(document.getElementById('height_in').value);
+	
+        if (!checker(w))
+	{
+		
+                showAndroidToast('Please input your weight');
+		return;
+	}
+	else if (!checker(hf))
+	{
+		
+                showAndroidToast('Please input your height');
+		return;
+	}
+	
+	
+	if (!checker(hi))
+	{
+		var i = 0;
+		document.getElementById('height_in').value = i;
+	}
+	else
+	{
+		var i = parseInt(document.getElementById('height_in').value);
+	}
+	
+	var comp_h = parseFloat((hf * 12) + (i * 1));
+	var tot_h = comp_h * comp_h;	
+	
+	comp = formula(w, tot_h);
+	document.getElementById('bmitot').value = comp;
+	
+	if (comp > 30)
+	{
+		document.getElementById('res').value = 'Severe Level! Thats too much FAT! Go get some diet pills or something!';
+		document.getElementById("bmitot").style.backgroundColor = "red";
+		document.getElementById("zero").style.visibility = "hidden";
+		document.getElementById("one").style.visibility = "hidden";
+		document.getElementById("two").style.visibility = "hidden";
+		document.getElementById("three").style.visibility = "visible";
+	}
+	if (comp > 25 && comp <=29.9)
+	{
+		document.getElementById('res').value = 'Bad Level! You are too FAT!';
+		document.getElementById("bmitot").style.backgroundColor = "yellow";
+		document.getElementById("zero").style.visibility = "hidden";
+		document.getElementById("one").style.visibility = "hidden";
+		document.getElementById("two").style.visibility = "visible";
+		document.getElementById("three").style.visibility = "hidden";
+	}
+	if (comp > 18.5 && comp <=24.9)
+	{
+		document.getElementById('res').value = 'Nice! You are on the safe level!';
+		document.getElementById("bmitot").style.backgroundColor = "green";
+		document.getElementById("zero").style.visibility = "hidden";
+		document.getElementById("one").style.visibility = "visible";
+		document.getElementById("two").style.visibility = "hidden";
+		document.getElementById("three").style.visibility = "hidden";
+	}
+	if (comp < 18.5)
+	{
+		document.getElementById('res').value = 'Bad Level! Go get some nutrients!';
+		document.getElementById("bmitot").style.backgroundColor = "yellow";
+		document.getElementById("zero").style.visibility = "visible";
+		document.getElementById("one").style.visibility = "hidden";
+		document.getElementById("two").style.visibility = "hidden";
+		document.getElementById("three").style.visibility = "hidden";
+	}
+}
+
+function formula(w, h)
+{
+	var bmi = w/h * 703;
+	var a_bmi = Math.floor(bmi);
+	var dif = bmi - a_bmi;
+	dif = dif * 10;
+	diff = Math.round(dif);
+	
+	if (dif == 10)
+	{
+		a_bmi += 1;
+		dif = 0;	
+	}
+	bmi = a_bmi + "." + diff;
+	return bmi;
+}
+
+function checker(type)
+{
+   if (isNaN(parseInt(type)))
+   {
+      return false;
+   } 
+   else if (type < 0)
+   {
+ 	  return false;
+   }
+   else
+   {
+   return true;
+   }
+}
+
+function showAndroidToast(toast) 
+{
+   Android.showToast(toast);
+}
+
+</script>
+</head>
+	
+<body>
+
+	<div data-role="page" id="container">
+    	<div id="header">
+        </div>
+
+        <div data-role="content" id="body">
+            <h1>Calculate your BMI!</h1>
+            
+            Weight:<input type="text" name="weight" id="weight" size="7px" placeholder="Pound(lb.)" /><br>
+            Height:<input type="text" name="height_ft" id="height_ft" size="3px" placeholder="Feet(ft.)" />
+            <input type="text" name="height_in" id="height_in" size="3px" placeholder="Inch(in.)"  /><br>
+            <input type="button" name="ibm" id="ibm" value="Compute" onClick="compute();" /><br>
+            BMI:<input type="text" name="bmitot" id="bmitot" size="7px" /><br>
+
+            Result:<br>
+            <input type="text" name="res" id="res" size="55px" disabled />
+            
+            <div id="zero" class="showup" style="visibility:hidden;">
+                <a href="#underweight" data-role="button">Tips on how to fight Underweight</a>
+            </div>
+            <div id="one" class="showup" style="visibility:hidden;">
+                <a href="#normal" data-role="button">Tips on how to maintain your Healthy weight</a>
+            </div>
+            <div id="two" class="showup" style="visibility:hidden;">
+                <a href="#overweight" data-role="button">Tips on how to fight Overweight</a>
+            </div>
+            <div id="three" class="showup" style="visibility:hidden;">
+                <a href="#obese" data-role="button">Tips on how to fight Obesity</a>
+            </div>
+
+          	<div id="footer">
+            	
+        	</div>
+        </div>
+<!--
+        <div id="menu">
+        	<ul data-role="listview" data-inset="true">
+	        <li><a href="#">What is BMI?</a></li>
+                <li><a href="#">Nutrition</a></li>
+
+        </ul>
+        </div>-->
+	</div>
+
+<div data-role="page" id="underweight" data-theme="a">
+
+	<div data-role="header">
+		<h1>Tips on how to fight Underweight</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+        <ul>
+        <li>Consume more calories than you burn. Choose healthy foods to add calories.</li>
+        <li>Eat healthy food frequently, 5 to 6 times a day.</li>
+        <li>Include protein food in your diet because protein is the key for the muscle mass.</li>
+        <li>Avoid fatty foods and go with healthy fats.</li>
+        <li>Reduce as much mental and emotional stress as possible.</li>
+        <li>Take rest at least for 8 hours.</li>
+        <li>Exercise regularly.</li>       
+        </ul>    	
+	<p><a href="#container" data-direction="reverse" data-role="button" data-theme="b">Back</a></p>	
+	</div>
+</div>
+
+<div data-role="page" id="normal" data-theme="a">
+
+	<div data-role="header">
+		<h1>Tips on how to maintain your Healthy weight</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+        <ul>
+        <li>Lead a healthy lifestyle.</li>
+        <li>Monitor your weight twice a week.</li>
+        <li>Eat foods that are high in fibre.</li>
+        <li>Aim for at least 30 minutes of exercise for five or more days of the week.</li>
+        <li>Choose low-fat dairy products.</li>
+        <li>If you occasionally make mistakes with your diet, don’t give up!</li>       
+        </ul>
+	
+	<p><a href="#container" data-direction="reverse" data-role="button" data-theme="b">Back</a></p>		
+	</div>
+</div>
+
+<div data-role="page" id="overweight" data-theme="a">
+
+	<div data-role="header">
+		<h1>Tips on how to fight Overweight</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+        <ul>
+        <li>Reduce excessive intake of calories by cutting down rice and breads.</li>
+        <li>Introduce more of fresh vegetables and fruits in daily diet.</li>
+        <li>Drink water 3 liters helps in improving the metabolism of body.</li>
+        <li>Eating 3 main meals everyday on time which includes early dinner.</li>
+        <li>Avoid munching fried food or sweets in between the meals</li>
+        <li>Do include exercise in daily routine, like by walking upto market place or taking staircases instead of lift.</li>
+        </ul>
+	
+	<p><a href="#container" data-direction="reverse" data-role="button" data-theme="b">Back</a></p>	
+	</div>
+</div>
+<div data-role="page" id="obese" data-theme="a">
+
+	<div data-role="header">
+		<h1>Tips on how to fight Obesity</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-theme="a">	
+        <ul>
+        <li>Eat smaller portions.</li>
+        <li>Experiment with new and eat colorful meals.</li>
+        <li>Nibble small amounts of sweets.</li>
+        <li>Stay moving, walk everywhere.</li>
+        <li>Keep protein in your diet.</li>
+        <li>Stay balanced.</li>
+        <li>Do something active daily.</li>
+        </ul>
+	
+	<p><a href="#container" data-direction="reverse" data-role="button" data-theme="b">Back</a></p>	
+	</div>
+</div>
+
+</body>
+</html>
+		

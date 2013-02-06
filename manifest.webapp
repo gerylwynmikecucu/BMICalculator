@@ -1,0 +1,17 @@
+{
+  "name": "BIMCalculator",
+  "description": "Bio Calculator",
+  "launch_path": "/index.html",
+  "icons": {
+    "16": "img/snake.png",
+    "32": "img/snake32.png",
+    "48": "snake48.png",
+    "64": "snake64.png",
+    "128": "snake128.png",
+    "256": "snake256.png"
+  },
+  "developer": {
+    "name": "Chadwyn Gonzales"
+  },
+  "default_locale": "en"
+}
